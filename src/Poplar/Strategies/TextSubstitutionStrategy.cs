@@ -53,9 +53,9 @@ namespace Poplar.Strategies
             }
         }
 
-        private static void Stub(FileSystemInfo source, FileSystemInfo destination)
+        private void Stub(FileSystemInfo source, FileSystemInfo destination)
         {
-            if (source.FullName.EndsWith(".spark"))
+            if (source.FullName.EndsWith(Context.TemplateSuffix))
             {
                 // At this time the destination is already copied and processed by
                 // 'simple' text substitution, so destination should be processed.
