@@ -1,6 +1,38 @@
 <?xml version="1.0"?>
-<project name="nant" default="compile" xmlns="http://nant.sf.net/schemas/nant.xsd">
+<project name="poplar" default="build" xmlns="http://nant.sf.net/schemas/nant.xsd">
 
-  <target name="compile" />
+  <property name="configuration"  value="Debug" />
+  <property name="verbose"        value="false" />
+  <property name="base.dir"       value="${directory::get-current-directory()}" />
+  <property name="build.base.dir" value="${path::combine(base.dir, 'build')}" />
+  <property name="build.dir"      value="${path::combine(build.base.dir, configuration)}" />
+  <property name="src.dir"        value="${path::combine(base.dir, 'src')}" />
+  <property name="lib.dir"        value="${path::combine(base.dir, 'lib')}" />
 
- </project>
+  <target name="build">
+    <delete dir="${build.dir}" />
+    <mkdir dir="${build.dir}" />
+    <copy todir="${build.dir}">
+      <fileset basedir="${lib.dir}">
+        <include name="*"/>
+      </fileset>
+    </copy>
+    <csc target="exe" warnaserror="true" debug="true" output="${build.dir}/poplar.exe">
+      <nowarn>
+        <!-- 1591: Missing XML comment for publicly visible type or member 'Type_or_Member' -->
+        <warning number="1591" />
+        <!-- 1573: Parameter 'parameter' has no matching param tag in the XML comment for 'parameter' (but other parameters do) -->
+        <warning number="1573" />
+      </nowarn>
+      <references>
+        <include name="${lib.dir}/Optional.dll" />
+      </references>
+      <sources>
+        <include name="**/*.cs" />
+        <!-- The bin directory may contain *.cs files used as templates! -->
+        <exclude name="**/bin/**" />
+      </sources>
+    </csc>
+  </target>
+
+</project>
