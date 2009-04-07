@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<project name="nant" default="compile" xmlns="http://nant.sf.net/schemas/nant.xsd">
+
+  <target name="compile" />
+
+ </project>
