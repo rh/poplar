@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
+using Spark;
+using Spark.FileSystem;
 
 namespace Poplar.Strategies
 {
@@ -25,6 +28,7 @@ namespace Poplar.Strategies
             }
 
             SubstituteText(source, destination);
+            Stub(source, destination);
 
             return destination;
         }
@@ -48,5 +52,37 @@ namespace Poplar.Strategies
                 File.WriteAllText(destination.FullName, contents);
             }
         }
+
+        private static void Stub(FileSystemInfo source, FileSystemInfo destination)
+        {
+            if (source.FullName.EndsWith(".spark"))
+            {
+                // At this time the destination is already copied and processed by
+                // 'simple' text substitution, so destination should be processed.
+                var settings = new SparkSettings();
+                settings.AddNamespace("System");
+
+                var engine = new SparkViewEngine(settings) {DefaultPageBaseType = typeof(Template).FullName};
+                var folder = new InMemoryViewFolder {{source.Name, File.ReadAllText(destination.FullName)}};
+                engine.ViewFolder = folder;
+
+                var descriptor = new SparkViewDescriptor();
+                descriptor.AddTemplate(source.Name);
+
+                var view = (Template) engine.CreateInstance(descriptor);
+                var builder = new StringBuilder();
+                using (var output = new StringWriter(builder))
+                {
+                    view.RenderView(output);
+                    File.WriteAllText(destination.FullName, output.ToString());
+                }
+
+                engine.ReleaseInstance(view);
+            }
+        }
+    }
+
+    public abstract class Template : AbstractSparkView
+    {
     }
 }

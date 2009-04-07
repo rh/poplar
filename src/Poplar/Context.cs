@@ -92,7 +92,7 @@ namespace Poplar
 
         public string TemplateSuffix
         {
-            get { return ".template"; }
+            get { return ".spark"; }
         }
 
         #endregion
