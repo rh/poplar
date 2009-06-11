@@ -33,6 +33,12 @@ namespace Poplar
 
             var factory = new GeneratorFactory(this);
             var generatorsDirectory = new DirectoryInfo(GeneratorsDirectory);
+
+            if (!Directory.Exists(generatorsDirectory.FullName))
+            {
+                Directory.CreateDirectory(generatorsDirectory.FullName);
+            }
+
             foreach (var directory in generatorsDirectory.GetDirectories())
             {
                 var generator = factory.Create(directory.Name);
