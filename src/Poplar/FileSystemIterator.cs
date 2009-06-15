@@ -28,12 +28,12 @@ namespace Poplar
         {
             foreach (var directory in source.GetDirectories())
             {
-                IterateInternal(directory, Path.Combine(WorkingDirectory, directory.FullName.Substring(source.FullName.Length + 1)));
+                IterateInternal(directory, Path.Combine(WorkingDirectory, directory.Name));
             }
 
             foreach (var file in source.GetFiles())
             {
-                IterateInternal(file, Path.Combine(WorkingDirectory, file.FullName.Substring(source.FullName.Length + 1)));
+                IterateInternal(file, Path.Combine(WorkingDirectory, file.Name));
             }
         }
 
