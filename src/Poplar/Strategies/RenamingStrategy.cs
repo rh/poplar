@@ -10,10 +10,8 @@ namespace Poplar.Strategies
             {
                 if (source.Name.Contains(parameter.Stub))
                 {
-                    var path = Path.Combine(destination.Parent.FullName,
-                                            source.Name.Replace(parameter.Stub, parameter.Value));
+                    var path = Path.Combine(destination.Parent.FullName, source.Name.Replace(parameter.Stub, parameter.Value));
                     destination = new DirectoryInfo(path);
-                    Context.Debug.WriteLine("  renamed   '{0}' to '{1}'", source.Name, destination.Name);
                 }
             }
             return destination;
@@ -25,17 +23,14 @@ namespace Poplar.Strategies
             {
                 if (source.Name.Contains(parameter.Stub))
                 {
-                    var path = Path.Combine(destination.Directory.FullName,
-                                            source.Name.Replace(parameter.Stub, parameter.Value));
+                    var path = Path.Combine(destination.Directory.FullName, source.Name.Replace(parameter.Stub, parameter.Value));
                     destination = new FileInfo(path);
-                    Context.Debug.WriteLine("  renamed   '{0}' to '{1}'", source.Name, destination.Name);
                 }
             }
             if (source.Name.EndsWith(Context.TemplateSuffix))
             {
                 var path = Path.Combine(destination.Directory.FullName, source.Name.Substring(0, source.Name.Length - Context.TemplateSuffix.Length));
                 destination = new FileInfo(path);
-                Context.Debug.WriteLine("  renamed   '{0}' to '{1}'", source.Name, destination.Name);
             }
             return destination;
         }

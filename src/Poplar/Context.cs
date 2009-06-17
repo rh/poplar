@@ -16,16 +16,10 @@ namespace Poplar
         /// </summary>
         public TextWriter Out { get; set; }
 
-        /// <summary>
-        /// Gets or sets the de debug output stream.
-        /// </summary>
-        public TextWriter Debug { get; set; }
-
         //[DebuggerStepThrough]
         public Context()
         {
             Out = Console.Out;
-            Debug = TextWriter.Null;
             GeneratorName = String.Empty;
             WorkingDirectory = Directory.GetCurrentDirectory();
 
