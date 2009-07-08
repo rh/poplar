@@ -11,8 +11,5 @@ namespace Poplar.Commands
         /// </remarks>
         [Ignore]
         public Context GeneratorContext { get; set; }
-
-        [Description("If set, debug information is shown.")]
-        public bool Debug { get; set; }
     }
 }

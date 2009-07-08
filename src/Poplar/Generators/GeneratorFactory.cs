@@ -50,7 +50,6 @@ namespace Poplar.Generators
                     if (parameter != null)
                     {
                         parameter.Value = value;
-                        Context.Debug.WriteLine("  set      '{0}' to '{1}'", parameter.Name, parameter.Value);
                     }
                 }
             }

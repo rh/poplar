@@ -23,7 +23,6 @@ namespace Poplar.Strategies
         {
             if (extensions.Contains(destination.Extension))
             {
-                Context.Debug.WriteLine("  skipped text substitution for '{0}'", Context.RelativePathFor(destination));
                 return destination;
             }
 
@@ -43,7 +42,6 @@ namespace Poplar.Strategies
                 if (contents.Contains(parameter.Stub))
                 {
                     contents = contents.Replace(parameter.Stub, parameter.Value);
-                    Context.Debug.WriteLine("  replaced  '{0}' with '{1}'", parameter.Stub, parameter.Value);
                 }
             }
 

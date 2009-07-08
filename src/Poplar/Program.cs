@@ -29,10 +29,6 @@ namespace Poplar
                 {
                     var c = command as Command;
                     c.GeneratorContext = context;
-                    if (c.Debug)
-                    {
-                        context.Debug = Console.Out;
-                    }
                 }
                 command.Execute();
             }
