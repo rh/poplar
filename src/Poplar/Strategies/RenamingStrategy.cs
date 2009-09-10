@@ -27,11 +27,23 @@ namespace Poplar.Strategies
                     destination = new FileInfo(path);
                 }
             }
-            if (source.Name.EndsWith(Context.TemplateSuffix))
+
+            const string SparkTemplateSuffix = ".spark";
+
+            if (source.Name.EndsWith(SparkTemplateSuffix))
             {
-                var path = Path.Combine(destination.Directory.FullName, source.Name.Substring(0, source.Name.Length - Context.TemplateSuffix.Length));
+                var path = Path.Combine(destination.Directory.FullName, source.Name.Substring(0, source.Name.Length - SparkTemplateSuffix.Length));
                 destination = new FileInfo(path);
             }
+
+            const string T4TemplateSuffix = ".tt";
+
+            if (source.Name.EndsWith(T4TemplateSuffix))
+            {
+                var path = Path.Combine(destination.Directory.FullName, source.Name.Substring(0, source.Name.Length - T4TemplateSuffix.Length));
+                destination = new FileInfo(path);
+            }
+
             return destination;
         }
     }

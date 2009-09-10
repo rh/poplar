@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using Mono.TextTemplating;
 using Spark;
 using Spark.FileSystem;
 
@@ -53,14 +54,14 @@ namespace Poplar.Strategies
 
         private void Stub(FileSystemInfo source, FileSystemInfo destination)
         {
-            if (source.FullName.EndsWith(Context.TemplateSuffix))
+            if (source.FullName.EndsWith(".spark"))
             {
                 // At this time the destination is already copied and processed by
                 // 'simple' text substitution, so destination should be processed.
                 var settings = new SparkSettings();
                 settings.AddNamespace("System");
 
-                var engine = new SparkViewEngine(settings) {DefaultPageBaseType = typeof(Template).FullName};
+                var engine = new SparkViewEngine(settings) {DefaultPageBaseType = typeof (Template).FullName};
                 var folder = new InMemoryViewFolder {{source.Name, File.ReadAllText(destination.FullName)}};
                 engine.ViewFolder = folder;
 
@@ -76,6 +77,11 @@ namespace Poplar.Strategies
                 }
 
                 engine.ReleaseInstance(view);
+            }
+            else if (source.FullName.EndsWith(".tt"))
+            {
+                var generator = new TemplateGenerator();
+                generator.ProcessTemplate(source.FullName, destination.FullName);
             }
         }
     }

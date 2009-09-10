@@ -27,6 +27,7 @@
       <references>
         <include name="${lib.dir}/Optional.dll" />
         <include name="${lib.dir}/Spark.dll" />
+        <include name="${lib.dir}/Mono.TextTemplating.dll" />
       </references>
       <sources>
         <include name="**/*.cs" />

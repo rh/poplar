@@ -90,11 +90,6 @@ namespace Poplar
             get { return Path.Combine(CurrentDirectory, "poplar.xml"); }
         }
 
-        public string TemplateSuffix
-        {
-            get { return ".spark"; }
-        }
-
         #endregion
 
         #region Environment Specific
