@@ -1,8 +1,10 @@
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Mono.TextTemplating;
+using Poplar.Exceptions;
 using Spark;
 using Spark.FileSystem;
 
@@ -81,7 +83,15 @@ namespace Poplar.Strategies
             else if (source.FullName.EndsWith(".tt"))
             {
                 var generator = new TemplateGenerator();
-                generator.ProcessTemplate(source.FullName, destination.FullName);
+                if (!generator.ProcessTemplate(source.FullName, destination.FullName))
+                {
+                    var exception = new TemplateException(source.FullName);
+                    foreach (CompilerError error in generator.Errors)
+                    {
+                        exception.AddError(error.ErrorText);
+                    }
+                    throw exception;
+                }
             }
         }
     }

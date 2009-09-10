@@ -73,6 +73,7 @@
     <Compile Include="Commands\ImportCommand.cs" />
     <Compile Include="Commands\RemoveCommand.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\GeneratorFactory.cs" />
     <Compile Include="Strategies\CopyStrategy.cs" />
