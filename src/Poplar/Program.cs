@@ -27,8 +27,7 @@ namespace Poplar
                 var command = factory.Create(args);
                 if (command is Command)
                 {
-                    var c = command as Command;
-                    c.GeneratorContext = context;
+                    (command as Command).GeneratorContext = context;
                 }
                 command.Execute();
             }
