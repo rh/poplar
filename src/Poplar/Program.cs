@@ -17,6 +17,7 @@ namespace Poplar
 
                 var factory = new CommandFactory(args);
 
+                factory.Register<ListCommand>();
                 factory.Register<InstallCommand>();
                 factory.Register<ImportCommand>();
                 factory.Register<RemoveCommand>();
