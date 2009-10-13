@@ -16,13 +16,10 @@ namespace Poplar
                 HelpCommand.DisplayCopyRight = HelpCommand.DisplayDescription = false;
 
                 var factory = new CommandFactory(args);
+
+                factory.Register<InstallCommand>();
                 factory.Register<ImportCommand>();
                 factory.Register<RemoveCommand>();
-
-                foreach (var generator in context.Generators)
-                {
-                    factory.Register(new GenerateCommand {Name = generator.Name});
-                }
 
                 var command = factory.Create(args);
                 if (command is Command)
