@@ -5,8 +5,8 @@ using Optional.Attributes;
 
 namespace Poplar.Commands
 {
-    [Description("Removes a generator from the list of available generators")]
-    public class RemoveCommand : Command
+    [Description("Uninstalls generators")]
+    public class UninstallCommand : Command
     {
         [Required, Description("The generator to remove")]
         public string Generator { get; set; }
@@ -24,7 +24,7 @@ namespace Poplar.Commands
             try
             {
                 Directory.Delete(GeneratorContext.GeneratorDirectory, true);
-                WriteLine("Removed generator '{0}'.", GeneratorContext.GeneratorName);
+                WriteLine("Uninstalled generator '{0}'.", GeneratorContext.GeneratorName);
 
                 if (File.Exists(GeneratorContext.GeneratorConfigFile))
                 {
