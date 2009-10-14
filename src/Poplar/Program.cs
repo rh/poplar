@@ -21,6 +21,7 @@ namespace Poplar
                 factory.Register<InstallCommand>();
                 factory.Register<UninstallCommand>();
                 factory.Register<ImportCommand>();
+                factory.Register<ExportCommand>();
 
                 var command = factory.Create(args);
                 if (command is Command)
