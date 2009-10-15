@@ -5,35 +5,35 @@ using Command=Poplar.Commands.Command;
 
 namespace Poplar
 {
-    internal class Program
-    {
-        private static void Main(string[] args)
-        {
-            try
-            {
-                var context = new Context();
+	internal class Program
+	{
+		private static void Main(string[] args)
+		{
+			try
+			{
+				var context = new Context();
 
-                HelpCommand.DisplayCopyRight = HelpCommand.DisplayDescription = false;
+				HelpCommand.DisplayCopyRight = HelpCommand.DisplayDescription = false;
 
-                var factory = new CommandFactory(args);
+				var factory = new CommandFactory(args);
 
-                factory.Register<ListCommand>();
-                factory.Register<InstallCommand>();
-                factory.Register<UninstallCommand>();
-                factory.Register<ImportCommand>();
-                factory.Register<ExportCommand>();
+				factory.Register<ListCommand>();
+				factory.Register<InstallCommand>();
+				factory.Register<UninstallCommand>();
+				factory.Register<ImportCommand>();
+				factory.Register<ExportCommand>();
 
-                var command = factory.Create(args);
-                if (command is Command)
-                {
-                    (command as Command).GeneratorContext = context;
-                }
-                command.Execute();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-    }
+				var command = factory.Create(args);
+				if (command is Command)
+				{
+					(command as Command).GeneratorContext = context;
+				}
+				command.Execute();
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+		}
+	}
 }
