@@ -77,7 +77,7 @@
     <Compile Include="Commands\ImportCommand.cs" />
     <Compile Include="Commands\InstallCommand.cs" />
     <Compile Include="Commands\ListCommand.cs" />
-    <Compile Include="Commands\UninstallCommand.cs" />
+    <Compile Include="Commands\RemoveCommand.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Exceptions\TemplateException.cs" />
     <Compile Include="Generators\Generator.cs" />

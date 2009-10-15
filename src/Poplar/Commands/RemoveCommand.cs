@@ -5,8 +5,8 @@ using Optional.Attributes;
 
 namespace Poplar.Commands
 {
-	[Description("Uninstalls generators")]
-	public class UninstallCommand : Command
+	[Description("Removes generators")]
+	public class RemoveCommand : Command
 	{
 		[Required, Description("The generator to remove")]
 		public string Generator { get; set; }
