@@ -8,13 +8,13 @@ namespace Poplar.Commands
 		public override int Execute()
 		{
 			// 'install' is the first argument
-			if (ApplicationContext.ApplicationArguments.Length != 2)
+			if (ApplicationContext.Arguments.Length != 2)
 			{
 				WriteLine("No generator given.");
 				return 1;
 			}
 
-			GeneratorContext.Initialize(ApplicationContext.ApplicationArguments[1]);
+			GeneratorContext.Initialize(ApplicationContext.Arguments[1]);
 			var generator = GeneratorContext.Generator;
 
 			if (generator == null)

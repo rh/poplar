@@ -15,7 +15,7 @@ namespace Poplar
 
 				HelpCommand.DisplayCopyRight = HelpCommand.DisplayDescription = false;
 
-				var factory = new CommandFactory(args);
+				var factory = new CommandFactory();
 
 				factory.Register<ListCommand>();
 				factory.Register<InstallCommand>();
