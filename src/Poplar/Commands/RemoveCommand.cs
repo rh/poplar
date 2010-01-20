@@ -2,50 +2,56 @@ using System;
 using System.IO;
 using System.Security;
 using Optional.Attributes;
+using Optional.Commands;
 
 namespace Poplar.Commands
 {
 	[Description("Removes generators")]
-	public class RemoveCommand : Command
+    [Usage("<generator>")]
+	public class RemoveCommand : Command, IArgumentsAware
 	{
-		[Required, Description("The generator to remove")]
-		public string Generator { get; set; }
-
 		public override int Execute()
 		{
-			GeneratorContext.GeneratorName = Generator;
-
-			if (!GeneratorContext.GeneratorExists)
+			// 'remove' is the first argument
+			if (ApplicationContext.Arguments.Length != 2)
 			{
-				WriteLine("Generator '{0}' not found.", GeneratorContext.GeneratorName);
+				WriteLine("No generator given.");
+				return 1;
+			}
+
+			Context.GeneratorName = ApplicationContext.Arguments[1];
+
+			if (!Context.GeneratorExists)
+			{
+				WriteLine("Generator '{0}' not found.", Context.GeneratorName);
 				return 1;
 			}
 
 			try
 			{
-				Directory.Delete(GeneratorContext.GeneratorDirectory, true);
-				WriteLine("Uninstalled generator '{0}'.", GeneratorContext.GeneratorName);
+				Directory.Delete(Context.GeneratorDirectory, true);
+				WriteLine("Uninstalled generator '{0}'.", Context.GeneratorName);
 
-				if (File.Exists(GeneratorContext.GeneratorConfigFile))
+				if (File.Exists(Context.GeneratorConfigFile))
 				{
-					File.Delete(GeneratorContext.GeneratorConfigFile);
+					File.Delete(Context.GeneratorConfigFile);
 				}
 				return 0;
 			}
 			catch (IOException e)
 			{
 				WriteLine("Failed to remove generator '{0}': you do not have the required permission to delete directory '{1}'. Details: {2}",
-				          GeneratorContext.GeneratorName, GeneratorContext.GeneratorDirectory, e.Message);
+				          Context.GeneratorName, Context.GeneratorDirectory, e.Message);
 			}
 			catch (SecurityException e)
 			{
 				WriteLine("Failed to remove generator '{0}': you do not have the required permission to delete directory '{1}'. Details: {2}",
-				          GeneratorContext.GeneratorName, GeneratorContext.GeneratorDirectory, e.Message);
+				          Context.GeneratorName, Context.GeneratorDirectory, e.Message);
 			}
 			catch (UnauthorizedAccessException e)
 			{
 				WriteLine("Failed to remove generator '{0}': you do not have the required permission to delete directory '{1}'. Details: {2}",
-				          GeneratorContext.GeneratorName, GeneratorContext.GeneratorDirectory, e.Message);
+				          Context.GeneratorName, Context.GeneratorDirectory, e.Message);
 			}
 			return 1;
 		}

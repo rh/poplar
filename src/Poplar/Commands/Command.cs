@@ -10,6 +10,6 @@ namespace Poplar.Commands
 		/// See <see cref="Program"/>.
 		/// </remarks>
 		[Ignore]
-		public Context GeneratorContext { get; set; }
+		public Context Context { get; set; }
 	}
 }

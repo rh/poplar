@@ -4,7 +4,7 @@ namespace Poplar.Commands
 	{
 		public override int Execute()
 		{
-			foreach (var generator in GeneratorContext.Generators)
+			foreach (var generator in Context.Generators)
 			{
 				WriteLine(generator.Name);
 			}

@@ -1,6 +1,5 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Mono.TextTemplating;
@@ -14,13 +13,7 @@ namespace Poplar.Strategies
 	{
 		// Text substitution is not attempted for files with these extensions
 		// TODO: make this configurable
-		private readonly List<string> extensions;
-
-		[DebuggerStepThrough]
-		public TextSubstitutionStrategy()
-		{
-			extensions = new List<string> {".exe", ".dll", ".pdb", ".jpg", ".gif", ".png"};
-		}
+        private readonly List<string> extensions = new List<string> { ".exe", ".dll", ".pdb", ".jpg", ".gif", ".png" };
 
 		public override FileInfo Process(FileInfo source, FileInfo destination)
 		{
@@ -54,7 +47,7 @@ namespace Poplar.Strategies
 			}
 		}
 
-		private void Stub(FileSystemInfo source, FileSystemInfo destination)
+		private static void Stub(FileSystemInfo source, FileSystemInfo destination)
 		{
 			if (source.FullName.EndsWith(".spark"))
 			{

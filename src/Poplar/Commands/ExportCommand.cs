@@ -6,6 +6,7 @@ using Poplar.Strategies;
 namespace Poplar.Commands
 {
 	[Description("Exports a generator to a .zip file")]
+    [Usage("<generator>")]
 	public class ExportCommand : Command, IArgumentsAware
 	{
 		public override int Execute()
@@ -17,32 +18,32 @@ namespace Poplar.Commands
 				return 1;
 			}
 
-			GeneratorContext.Initialize(ApplicationContext.Arguments[1]);
-			var generator = GeneratorContext.Generator;
+			Context.Initialize(ApplicationContext.Arguments[1]);
+			var generator = Context.Generator;
 
 			if (generator == null)
 			{
-				WriteLine("Generator '{0}' not found.", GeneratorContext.GeneratorName);
+				WriteLine("Generator '{0}' not found.", Context.GeneratorName);
 				return 1;
 			}
 
-			var directory = new DirectoryInfo(GeneratorContext.GeneratorDirectory);
+			var directory = new DirectoryInfo(Context.GeneratorDirectory);
 
 			if (directory.Exists)
 			{
-				GeneratorContext.WorkingDirectory = GeneratorContext.GeneratorsDirectory;
+				Context.WorkingDirectory = Context.GeneratorsDirectory;
 
 				var path = string.Format("{0}.zip", generator.Name);
-				using (var strategy = new ZipStrategy(path) {Context = GeneratorContext})
+				using (var strategy = new ZipStrategy(path) {Context = Context})
 				{
-					new FileSystemIterator(GeneratorContext.CurrentDirectory, new[] {strategy}).Iterate(directory);
+					new FileSystemIterator(Context.CurrentDirectory, new[] {strategy}).Iterate(directory);
 				}
-				GeneratorContext.Out.WriteLine();
-				GeneratorContext.Out.WriteLine("Created {0}.zip.", generator.Name);
+				Context.Out.WriteLine();
+				Context.Out.WriteLine("Created {0}.zip.", generator.Name);
 			}
 			else
 			{
-				GeneratorContext.Out.WriteLine("Generator '{0}' not found.", GeneratorContext.Generator.Name);
+				Context.Out.WriteLine("Generator '{0}' not found.", Context.Generator.Name);
 				return 1;
 			}
 
