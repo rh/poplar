@@ -1,11 +1,10 @@
-build
+build/
+bin/
+obj/
 
-src/*.user
-src/_ReSharper*
-src/*.resharper*
-src/*.suo
-src/*.sln.cache
-src/*.gpState
-
-src/*/bin
-src/*/obj
+*.user
+_ReSharper*
+*.resharper*
+*.suo
+*.sln.cache
+*.gpState
