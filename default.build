@@ -31,9 +31,9 @@
         <include name="${lib.dir}/Mono.TextTemplating.dll" />
       </references>
       <sources>
-        <include name="**/*.cs" />
+        <include name="${src.dir}/**/*.cs" />
         <!-- The bin directory may contain *.cs files used as templates! -->
-        <exclude name="**/bin/**" />
+        <exclude name="${src.dir}/**/bin/**" />
       </sources>
     </csc>
   </target>
