@@ -5,45 +5,56 @@ using Poplar.Strategies;
 
 namespace Poplar.Commands
 {
-	[Description("Imports an entire directory as a generator")]
-	[Usage("<directory> [options]")]
-	public class ImportCommand : Command, IArgumentsAware
-	{
-		[ShortName("n"), LongName("name")]
-		[Description("The name of the new generator.")]
-		public string Generator { get; set; }
+    [Description("Imports an entire directory as a generator")]
+    [Usage("<directory> [options]")]
+    public class ImportCommand : Command, IArgumentsAware
+    {
+        [ShortName("n"), LongName("name")]
+        [Description("The name of the new generator.")]
+        public string Name { get; set; }
 
-		public override int Execute()
-		{
-			if (ApplicationContext.Arguments.Length < 2)
-			{
-				WriteLine("Please specify a directory to import.");
-				return 1;
-			}
+        public override int Execute()
+        {
+            if (ApplicationContext.Options.Count < 2)
+            {
+                WriteLine("Please specify a directory to import.");
+                return 1;
+            }
 
-			var directory = ApplicationContext.Arguments[1];
+            var directory = ApplicationContext.Arguments[1];
 
-			// Create the generator directory
-			var source = new DirectoryInfo(Path.Combine(Context.CurrentDirectory, directory));
-			var destination = new DirectoryInfo(Path.Combine(Context.GeneratorsDirectory, source.Name));
+            // Create the generator directory
+            // TODO: this should also work with a proper path, e.g. C:\temp
+            var source = new DirectoryInfo(Path.Combine(Context.CurrentDirectory, directory));
+            var destination = new DirectoryInfo(Path.Combine(Context.GeneratorsDirectory, source.Name));
 
-			if (Generator != null)
-			{
-				destination = new DirectoryInfo(Path.Combine(Context.GeneratorsDirectory, Generator));
-			}
+            foreach (var option in ApplicationContext.Options)
+            {
+                if (option.ShortName == "n" || option.LongName == "name")
+                {
+                    Name = option.Value;
+                    break;
+                }
+            }
 
-			Context.WorkingDirectory = Context.GeneratorsDirectory;
+            if (Name != null)
+            {
+                destination = new DirectoryInfo(Path.Combine(Context.GeneratorsDirectory, Name));
+            }
 
-			// Use CopyStrategy so the output is consistent
-			var strategy = new CopyStrategy {Context = Context};
-			strategy.Process(source, destination);
+            // TODO: check if a generator with that name already exists
+            Context.WorkingDirectory = Context.GeneratorsDirectory;
 
-			// Copy all directories and files from the source directory
-			var strategies = new FileSystemStrategy[] {strategy};
-			// Use destination.FullName so the output contains the name of the new generator
-			new FileSystemIterator(destination.FullName, strategies).Iterate(source);
+            // Use CopyStrategy so the output is consistent
+            var strategy = new CopyStrategy {Context = Context};
+            strategy.Process(source, destination);
 
-			return 0;
-		}
-	}
+            // Copy all directories and files from the source directory
+            var strategies = new FileSystemStrategy[] {strategy};
+            // Use destination.FullName so the output contains the name of the new generator
+            new FileSystemIterator(destination.FullName, strategies).Iterate(source);
+
+            return 0;
+        }
+    }
 }
