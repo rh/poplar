@@ -1,11 +1,12 @@
 nhibernate:
   description "Some description"
+  parameter id:
+    description "The id of ..."
+    #value { return System.Guid.NewGuid() }
+    value guid
   parameter name:
-    description "The name"
-  parameter "namespace":
+    description "The name "
+    value "Some string"
+  parameter ns:
     description "The namespace"
-
-template nhibernate:
-  description "Some description"
-  parameter name:
-    description "The name"
+    value { return System.DateTime.Now.ToShortDateString() }

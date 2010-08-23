@@ -1,3 +1,4 @@
+using System;
 using Boo.Lang.Compiler.Ast;
 using Boo.Lang.Compiler.Steps;
 
@@ -16,6 +17,8 @@ namespace Poplar.Dsl
 
 		public override void OnMacroStatement(MacroStatement node)
 		{
+            Console.WriteLine("ConvertMacroCompilerStep: {0}", node.Name);
+
 			if (node.Name == "template")
 			{
 				return;
